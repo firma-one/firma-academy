@@ -4,12 +4,12 @@
 #
 # For each agents/<agent>/skills/<skill>/ directory it creates
 # dist/<agent>/<skill>.zip with SKILL.md at the archive root (the layout the
-# Claude "Customize -> Skills" uploader expects). The outcome-dashboard skill's
-# scripts/ folder is included automatically.
+# Claude "Customize -> Skills" uploader expects). A skill's scripts/ folder
+# (e.g. pmc-outcome-dashboard's) is included automatically.
 #
 # Usage:
 #   ./scripts/build-skills.sh              # build every agent
-#   ./scripts/build-skills.sh project-coordinator   # build one agent
+#   ./scripts/build-skills.sh pm-copilot   # build one agent
 #
 set -euo pipefail
 

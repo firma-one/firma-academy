@@ -1,5 +1,5 @@
 ---
-name: outcome-dashboard
+name: pmc-outcome-dashboard
 description: "Use when the Project Manager asks for the outcome view, dashboard, 'are we on track for the goal', or a velocity/burn projection. Shows progress against the business outcome (not just throughput) and can COMPUTE and CHART sprint metrics via the bundled script. Requires Code execution & File creation enabled. Reads Jira and Confluence; drafts for human review."
 ---
 

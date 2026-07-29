@@ -1,5 +1,5 @@
 ---
-name: slack-notifier
+name: pmc-slack-notifier
 description: "Use when the Project Manager asks to post, notify, or share an update on Slack — e.g. 'post the steering summary to #atlas', 'notify the channel', 'drop a Slack update'. Posts a concise update to a Slack channel. Defaults to drafting for review; sends directly only on explicit instruction. This is a WRITE skill that reaches stakeholders, so human approval is the default."
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: decision-register
+name: pmc-decision-register
 description: "Use when the Project Manager asks to log decisions, 'what did we decide', or for the decision register. Captures decisions made and decisions pending, each pending item with options, a recommendation, and the cost of not deciding. Reads Confluence and Jira; drafts for human review."
 ---
 

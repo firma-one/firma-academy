@@ -1,5 +1,5 @@
 ---
-name: drive-report-publisher
+name: pmc-drive-report-publisher
 description: "Use when the Project Manager asks to save, publish, or export a report or governance artefact to Google Drive — e.g. 'save the steering pack to Drive', 'put the report on Drive', 'export this to Drive'. Writes the finished artefact as a Google Doc into the Atlas Shared Drive. This is a WRITE skill: creating an internal artefact on Drive is permitted directly; it does not distribute to external stakeholders."
 ---
 

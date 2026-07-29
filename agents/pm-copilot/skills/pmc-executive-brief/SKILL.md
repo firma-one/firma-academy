@@ -1,5 +1,5 @@
 ---
-name: executive-brief
+name: pmc-executive-brief
 description: "Use when the Project Manager asks for a steering brief, executive status, sponsor update, or 'how are we doing'. Produces a one-page executive status brief anchored to the business outcome, not story points. Reads Jira and Confluence; drafts for human review; never sends or publishes."
 ---
 

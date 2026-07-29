@@ -1,5 +1,5 @@
 ---
-name: action-register
+name: pmc-action-register
 description: "Use when the Project Manager asks to track actions, 'who owns what', or for the action register. Consolidates open actions across ceremonies and governance into one prioritised list, flagging overdue and unowned items. Reads Confluence and Jira; drafts for human review."
 ---
 

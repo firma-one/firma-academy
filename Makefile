@@ -2,7 +2,7 @@
 #
 # Common targets:
 #   make build            package every agent's skills into dist/<agent>/*.zip
-#   make build-<agent>    package one agent (e.g. make build-project-coordinator)
+#   make build-<agent>    package one agent (e.g. make build-pm-copilot)
 #   make build-plugins    package every agent as an installable plugin archive
 #                         into dist/plugins/<agent>.zip
 #   make validate         sanity-check plugin/marketplace manifests + skills

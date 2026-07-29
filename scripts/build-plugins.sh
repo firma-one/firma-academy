@@ -13,7 +13,7 @@
 #
 # Usage:
 #   ./scripts/build-plugins.sh                      # build every agent-plugin
-#   ./scripts/build-plugins.sh project-coordinator   # build one agent
+#   ./scripts/build-plugins.sh pm-copilot   # build one agent
 #
 set -euo pipefail
 

@@ -1,5 +1,5 @@
 ---
-name: stakeholder-email
+name: pmc-stakeholder-email
 description: "Use when the Project Manager asks to draft the stakeholder update email, sponsor note, or weekly update. Drafts a clear, honest, executive-tone email. The agent drafts only — the PM reviews and sends. Never sends email itself."
 ---
 

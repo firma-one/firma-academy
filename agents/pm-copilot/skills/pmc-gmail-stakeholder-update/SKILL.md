@@ -1,5 +1,5 @@
 ---
-name: gmail-stakeholder-update
+name: pmc-gmail-stakeholder-update
 description: "Use when the Project Manager asks to prepare, draft, or send a stakeholder email via Gmail — e.g. 'draft the sponsor email', 'email the steering update', 'prepare the weekly note in Gmail'. Creates a Gmail DRAFT for the PM to review and send. It never sends email autonomously — draft only, by design."
 ---
 

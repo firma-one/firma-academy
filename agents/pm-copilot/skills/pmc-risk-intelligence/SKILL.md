@@ -1,5 +1,5 @@
 ---
-name: risk-intelligence
+name: pmc-risk-intelligence
 description: "Use when the Project Manager asks for the risk radar, 'what are the risks', or 'what's threatening go-live'. Turns the RAID log and Jira blockers into a ranked, causal, decision-oriented risk picture — not a list. Reads Jira and Confluence; drafts for human review."
 ---
 

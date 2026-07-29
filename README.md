@@ -17,37 +17,37 @@ firma-academy/
 │   └── validate.sh        ← sanity-checks plugin/marketplace manifests + skill files
 ├── dist/                  ← build output (git-ignored)
 └── agents/
-    └── project-coordinator/   ← first agent
+    └── pm-copilot/   ← first agent (PM Copilot)
         ├── .claude-plugin/
         │   └── plugin.json    ← plugin manifest (makes this agent an installable plugin)
         ├── README.md
         ├── DEPLOY.md
         ├── instructions.md
         └── skills/
-            ├── executive-brief/SKILL.md
-            ├── risk-intelligence/SKILL.md
-            ├── stakeholder-email/SKILL.md
-            ├── decision-register/SKILL.md
-            ├── action-register/SKILL.md
-            ├── outcome-dashboard/
+            ├── pmc-executive-brief/SKILL.md
+            ├── pmc-risk-intelligence/SKILL.md
+            ├── pmc-stakeholder-email/SKILL.md
+            ├── pmc-decision-register/SKILL.md
+            ├── pmc-action-register/SKILL.md
+            ├── pmc-outcome-dashboard/
             │   ├── SKILL.md
             │   └── scripts/compute_metrics.py + sample_output.png
-            ├── drive-report-publisher/SKILL.md
-            ├── slack-notifier/SKILL.md
-            └── gmail-stakeholder-update/SKILL.md
+            ├── pmc-drive-report-publisher/SKILL.md
+            ├── pmc-slack-notifier/SKILL.md
+            └── pmc-gmail-stakeholder-update/SKILL.md
 ```
 
 ## Agents
 | Agent | Role | Skills | Notes |
 |---|---|---|---|
-| **project-coordinator** | Digital teammate to a Software PM: reads Jira + Confluence, drafts executive governance artefacts, and publishes them (Drive/Slack/Gmail) under review | 9 (5 prose, 1 code, 3 publishing) | Standing assignment: Project Atlas. Human-in-the-loop; internal artefacts write directly, stakeholder-facing actions draft first. |
+| **pm-copilot** (displayed as "PM Copilot") | Digital teammate to a Software PM: reads Jira + Confluence, drafts executive governance artefacts, and publishes them (Drive/Slack/Gmail) under review | 9 (5 prose, 1 code, 3 publishing) | Standing assignment: Project Atlas. Human-in-the-loop; internal artefacts write directly, stakeholder-facing actions draft first. |
 
-*(Add a row per agent as the library grows.)*
+*(Add a row per agent as the library grows. Give each agent's skills a short, distinctive prefix — e.g. `pmc-` for pm-copilot — so they're easy to spot via `/` completion in Claude Code.)*
 
 ## Build & deploy
 ```bash
-make build                       # zip all agents' skills into dist/ (per-skill ZIPs)
-make build-project-coordinator   # or just one agent
+make build                 # zip all agents' skills into dist/ (per-skill ZIPs)
+make build-pm-copilot      # or just one agent
 make build-plugins                # package each agent as an installable plugin -> dist/plugins/<agent>.zip
 make validate                    # sanity-check plugin/marketplace manifests + skill files
 make list                        # see agents and their skills
@@ -68,9 +68,9 @@ This repo is also a **Claude Code plugin marketplace**: `.claude-plugin/marketpl
 ```bash
 # in Claude Code
 /plugin marketplace add git@github.com:firma-one/firma-academy.git
-/plugin install project-coordinator@firma-academy
+/plugin install pm-copilot@firma-academy
 ```
-This delivers all of `project-coordinator`'s skills in one install — equivalent to uploading all nine ZIPs, done in a single step and kept in sync with this repo. Adding a new agent to the marketplace is just: give it a `skills/` folder, drop a `.claude-plugin/plugin.json` next to it, and add a `plugins[]` entry to the repo's `.claude-plugin/marketplace.json` (`make validate` checks both).
+This delivers all of PM Copilot's skills in one install — equivalent to uploading all nine ZIPs, done in a single step and kept in sync with this repo. Adding a new agent to the marketplace is just: give it a `skills/` folder, drop a `.claude-plugin/plugin.json` next to it, and add a `plugins[]` entry to the repo's `.claude-plugin/marketplace.json` (`make validate` checks both). Give each new agent's skills their own short, distinctive prefix (like `pmc-`) so they're easy to spot via `/` completion in Claude Code.
 
 **Security note:** only add and install marketplaces your organization has reviewed and publishes itself (like this repo, once vetted) — treat third-party/community plugin marketplaces the same as any other unreviewed code source, and don't add them by default.
 
