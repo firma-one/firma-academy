@@ -24,7 +24,7 @@ Never write to My Drive root. If the caller names a subfolder inside the Atlas S
 
 ## Procedure
 1. Confirm what is being published (which artefact / content) and that it's the reviewed/approved version — this skill publishes, it doesn't invent content.
-2. Choose a clear, dated title, e.g. `Atlas — Steering Pack — 2026-07-29` or `Atlas — Outcome Dashboard — S13`. Do **not** append the extension to the title — Drive shows it from the file type.
+2. Choose a clear, dated title **including the file extension**, e.g. `Atlas — Steering Pack — 2026-07-29.docx` or `Atlas — Outcome Dashboard — S13.xlsx`. `create_file` does not infer the extension from the MIME type, so a title without it shows no extension in the Drive list — append it explicitly.
 3. **Build the artefact as a Microsoft Office file** (do not upload plain text or HTML for Drive to convert). Use the appropriate document skill to produce real Office bytes:
    - Reports, briefs, steering packs → **`.docx`** (use the `docx` skill).
    - Tabular artefacts (registers, metrics, dashboards) → **`.xlsx`** (use the `xlsx` skill).
@@ -36,7 +36,7 @@ Never write to My Drive root. If the caller names a subfolder inside the Atlas S
    - `contentMimeType` — the matching Office MIME type (see table below)
    - `disableConversionToGoogleType: true` — **required**, so Drive keeps the file as native Office rather than converting it to a Google Doc/Sheet/Slides
    - `parentId = 0AGindXMKcjpZUk9PVA` (the Atlas Shared Drive)
-5. **Verify placement and format.** Check the response `parentId`/owner and `mimeType`. If the file landed in My Drive root (a `parentId` like `0AP0...` that is NOT the Atlas Shared Drive), the write went to the wrong place — see Gotcha below. If the returned `mimeType` is a `application/vnd.google-apps.*` type, conversion was **not** disabled — re-upload with `disableConversionToGoogleType: true`. Report either problem rather than claiming success.
+5. **Verify placement and format.** Check the response `parentId`, `mimeType`, and `fileExtension`. If the file landed in My Drive root (a `parentId` like `0AP0...` that is NOT the Atlas Shared Drive), the write went to the wrong place — see Gotcha below. If the returned `mimeType` is a `application/vnd.google-apps.*` type, conversion was **not** disabled — re-upload with `disableConversionToGoogleType: true`. (`fileExtension` may come back empty if the title omits the extension — fix via step 2 rather than relying on it.) Report any of these problems rather than claiming success.
 6. Return the `viewUrl` to the PM so they can open the published file.
 
 ## Office MIME types
