@@ -1,0 +1,13 @@
+{
+  "name": "project-coordinator",
+  "displayName": "Project Coordinator",
+  "version": "1.1.0",
+  "description": "Digital teammate for a Software PM: reads Jira + Confluence, drafts executive governance artefacts (brief, risk radar, decisions, actions, outcome dashboard), and publishes them (Drive/Slack/Gmail) under a governed, human-in-the-loop boundary.",
+  "author": {
+    "name": "firma-academy"
+  },
+  "homepage": "https://github.com/firma-one/firma-academy/tree/main/agents/project-coordinator",
+  "repository": "https://github.com/firma-one/firma-academy",
+  "license": "MIT",
+  "keywords": ["project-management", "governance", "jira", "confluence", "reporting", "slack", "gmail", "google-drive"]
+}

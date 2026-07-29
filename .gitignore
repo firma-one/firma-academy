@@ -1,0 +1,13 @@
+# Build output
+dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Charts/artefacts (keep sample outputs that document a skill)
+*.png
+!agents/**/scripts/sample_output.png
