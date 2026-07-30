@@ -41,11 +41,18 @@ list:
 		done; \
 	done
 
-# Run each dashboard-style script in its demo mode to prove it still executes.
+# Run each dashboard-style script against a small synthetic input to prove it
+# still executes. Scripts take no built-in sample data by design (real reports
+# must come from live Jira/Confluence data), so this writes a throwaway fixture
+# to a temp file rather than relying on a --demo mode.
 test:
 	@set -e; \
+	fixture=/tmp/_skilltest_sprints.json; \
+	printf '[{"sprint":"S1","committed":20,"completed":16,"goal_points":12},{"sprint":"S2","committed":22,"completed":19,"goal_points":15}]' > "$$fixture"; \
 	for py in $$(find $(AGENTS_DIR) -name 'compute_metrics.py'); do \
-		echo "==> $$py --demo"; \
-		python3 "$$py" --demo --out /tmp/_skilltest.png >/dev/null && echo "  ok"; \
+		echo "==> $$py --input $$fixture"; \
+		python3 "$$py" --input "$$fixture" --out /tmp/_skilltest.png >/dev/null; \
+		echo "  ok"; \
 	done; \
+	rm -f "$$fixture"; \
 	echo "all script self-checks passed"

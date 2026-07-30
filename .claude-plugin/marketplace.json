@@ -9,8 +9,8 @@
     {
       "name": "pm-copilot",
       "source": "./agents/pm-copilot",
-      "description": "Digital teammate for a Software PM: reads Jira + Confluence, drafts executive governance artefacts, and publishes them (Drive/Slack/Gmail) under a governed, human-in-the-loop boundary.",
-      "version": "1.2.0",
+      "description": "Digital teammate for a Software PM: reads Jira + Confluence and produces executive governance artefacts through five role-shaped skills (helper, fortnightly-dashboard, executive-brief, governance-intelligence, raid-maintainer). Publishing (Confluence/Drive/Slack/Gmail) is internal, under a governed human-in-the-loop boundary.",
+      "version": "2.0.0",
       "author": { "name": "firma-academy" },
       "keywords": ["project-management", "governance", "jira", "confluence", "reporting", "slack", "gmail", "google-drive"]
     }

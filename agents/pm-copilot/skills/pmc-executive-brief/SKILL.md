@@ -35,5 +35,11 @@ Every bullet must pass the "so what?" test. If a line only states a fact without
 - Sprint 11 closed at ~80% with two items carried into Sprint 12 — velocity reads soft.
 - One story was re-pointed after its sprint started (KYC 8→13 after an async pivot) — distorts burndown/velocity baseline.
 
+## Publish & archive (internal capabilities — see references/capabilities.md)
+After the PM approves the brief text:
+- **Email:** place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached. Confirm recipients with the PM; never fabricate addresses.
+- **Archive the brief to Drive:** build the one-pager as a real `.docx` in the workspace (Atlas header/footer), then get it onto Drive **via `copy_file`** to a dated name in the **Communication** folder — NOT base64 `create_file` (which hangs). See "Drive upload mechanics" in capabilities.md.
+- **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk — and set col-H RAG-num so the trend chart extends), then `copy_file` to a NEW dated snapshot `Executive-Briefs-Log-{YYYY-MM-DD--HH-MM}.xlsx` in Communication. Every change is a new dated file (no in-place update).
+
 ## Boundaries
-Draft only. Do not send, email, or publish. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.
+Draft only. Do not send email or post autonomously. Drive/Confluence writes are internal (direct on request); Gmail/Slack are draft-first. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.

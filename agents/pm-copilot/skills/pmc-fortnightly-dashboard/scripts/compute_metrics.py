@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-compute_metrics.py — Outcome Dashboard metrics + chart for the Project Coordinator Agent.
+compute_metrics.py — Fortnightly Dashboard metrics + chart.
+
+PURE CALCULATOR. It does NOT talk to Jira. The skill must pull LIVE sprint data
+from Jira (Atlassian connector, project AT) and write it to a JSON file FIRST,
+then run this script on that file. There is deliberately no built-in sample data:
+a real report is computed from live Jira points, never from a fixture.
 
 Reads per-sprint committed/completed/goal-linked points, computes velocity,
 spillover, and a simple completion projection, renders a chart, and prints a
@@ -8,26 +13,18 @@ JSON summary the agent can quote verbatim (numbers are computed, not estimated).
 
 Usage:
     python compute_metrics.py --input sprints.json --out outcome_dashboard.png
-    python compute_metrics.py --demo   # runs with built-in Project Atlas sample
 
-sprints.json: [{"sprint":"S11","committed":25,"completed":20,"goal_points":18}, ...]
+sprints.json (produced by the skill from a LIVE Jira query):
+    [{"sprint":"S11","committed":25,"completed":20,"goal_points":18}, ...]
   committed    = points committed at sprint start
   completed    = points actually completed
   goal_points  = subset of completed points that move the business outcome
                  (delivery vs. delivering-value distinction)
-Optional top-level context can be passed via --remaining-goal-scope N
-(remaining outcome-linked points still to deliver toward go-live).
+Optional: --remaining-goal-scope N (remaining outcome-linked points to go-live).
 """
 import argparse
 import json
 import sys
-
-
-DEMO_DATA = [
-    {"sprint": "S11", "committed": 25, "completed": 20, "goal_points": 16},
-    {"sprint": "S12", "committed": 21, "completed": 21, "goal_points": 15},
-    {"sprint": "S13", "committed": 24, "completed": 9,  "goal_points": 6},  # in progress
-]
 
 
 def compute(sprints, remaining_goal_scope=None, in_progress_last=True):
@@ -120,21 +117,28 @@ def render_chart(summary, out_path):
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--input", help="Path to sprints JSON")
+    ap = argparse.ArgumentParser(
+        description="Compute Fortnightly Dashboard metrics from LIVE Jira sprint data "
+                    "(the skill writes --input from a Jira query; no sample data exists).")
+    ap.add_argument("--input", required=True,
+                    help="Path to sprints JSON produced by the skill from a live Jira query")
     ap.add_argument("--out", default="outcome_dashboard.png", help="Chart output path")
     ap.add_argument("--remaining-goal-scope", type=float, default=None,
                     help="Remaining outcome-linked points to deliver toward go-live")
-    ap.add_argument("--demo", action="store_true", help="Use built-in sample data")
     args = ap.parse_args(argv)
 
-    if args.demo or not args.input:
-        sprints = DEMO_DATA
-        if args.remaining_goal_scope is None:
-            args.remaining_goal_scope = 40  # sample remaining outcome-linked scope
-    else:
+    try:
         with open(args.input) as f:
             sprints = json.load(f)
+    except FileNotFoundError:
+        ap.error(f"input file not found: {args.input}. The skill must query Jira "
+                 f"(project AT) and write real sprint points to this file FIRST.")
+    except json.JSONDecodeError as e:
+        ap.error(f"input is not valid JSON ({e}).")
+
+    if not isinstance(sprints, list) or not sprints:
+        ap.error("input JSON must be a non-empty list of sprint objects pulled from Jira. "
+                 "Refusing to compute a report with no live data.")
 
     summary = compute(sprints, remaining_goal_scope=args.remaining_goal_scope)
     chart = render_chart(summary, args.out)
