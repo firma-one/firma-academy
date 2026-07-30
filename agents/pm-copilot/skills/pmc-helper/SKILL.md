@@ -20,22 +20,28 @@ if the user typed something after the command, treat it as a normal request, not
 ```
 PM Copilot — here's what I can prepare for Project Atlas (reply with a number or name):
 
-  1. Fortnightly Dashboard
+  1. Fortnightly Dashboard   ·   /pmc-fortnightly-dashboard
      The full sprint-review + outcome report (2 layers, one doc).
      Pulls: Jira (project AT) + Confluence (Charter/notes) → computes velocity/chart.
      Publishes: a dated Confluence page for the team + a heads-up in #atlas (Slack).
 
-  2. Executive Brief
+  2. Executive Brief   ·   /pmc-executive-brief
      The sponsor-facing update: an email + a one-page supporting brief.
      Pulls: page 3 (Outcome Summary) of the current Fortnightly Dashboard.
      Publishes: archives the brief to the Atlas Shared Drive, logs it in the Executive
      Briefs Log, and places the email in Gmail as a DRAFT for you to review & send.
 
-  3. Governance Intelligence
+  3. Governance Intelligence   ·   /pmc-governance-intelligence
      Risk + decisions + actions as ONE causal picture (risk → decision it forces → actions).
      Pulls: Jira (AT) + Confluence RAID log + steering minutes.
      Publishes: a dated Confluence page for the team + a heads-up in #atlas (Slack).
 
+  4. RAID Maintainer   ·   /pmc-raid-maintainer
+     Keeps the RAID log current from the latest meeting minutes (so Governance Intelligence reads a living source).
+     Pulls: new Confluence Minutes/transcripts + the current RAID log + Jira (AT) cross-refs.
+     Publishes: PROPOSES a RAID diff (Add/Update/Close) for your approval, then updates the RAID page in Confluence — only once you approve.
+
+Reply with a number or name, or use the /slash command directly (power users).
 Or say "prepare the Steering Committee" and I'll assemble the full pack (1 + 3, then 2).
 ```
 
