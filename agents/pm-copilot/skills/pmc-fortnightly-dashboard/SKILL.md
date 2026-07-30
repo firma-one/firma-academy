@@ -57,6 +57,22 @@ If no sprint is given, default to the latest sprint and state which sprint you u
 - **Confluence** (space Atlas): Charter (the +20% digital-loan-conversion goal + success criteria), latest sprint-review/retro notes.
 - **Jira** (project AT): sprint membership, story points, status per issue, blockers, defects — the data the script consumes and the sprint-review tables need.
 
+## Step 0 — RESOLVE THE SPRINT FIRST (before any data pull)
+The user's shorthand (`S11`, `Sprint 11`, `sprint 11`, `11`) is NOT a Jira sprint name or ID. Jira sprints
+have their own names (e.g. "AT Sprint 11", "Atlas Sprint 11") and numeric sprint IDs. **Never put the
+shorthand straight into a JQL `sprint = "S11"` filter — it will error** (this is the failure to avoid).
+
+Resolve it first:
+1. Interpret the shorthand → the sprint **number** (S11 / Sprint 11 / 11 → 11). If none was given, use the latest/active sprint.
+2. Look up the real Jira sprint for project **AT** with that number — e.g. board sprints via the Atlassian
+   connector, or JQL `project = AT AND sprint = <sprintId>` once you have the ID. Match the number to the
+   actual sprint **name** and **numeric ID**.
+3. If more than one sprint matches (e.g. a renamed/duplicated sprint) or none does, ASK the PM which sprint
+   they mean rather than guessing. State the resolved sprint ("Building the dashboard for **AT Sprint 11**
+   (id 42)") so the PM can confirm before you pull stats.
+
+Only after the sprint is resolved to a real Jira sprint (name + ID) do you pull any data or run metrics.
+
 ## Procedure
 1. Restate the **outcome metric** and target: +20% digital loan conversion within two quarters of go-live.
 2. Assemble the **Sprint Review** layer from Jira: goal, committed/completed/velocity/carryover/defects, the done-and-demoed stories (framed by user value), carryover with reasons, blockers, actions.
@@ -69,10 +85,11 @@ If no sprint is given, default to the latest sprint and state which sprint you u
 has NO built-in sample data (a no-argument run errors on purpose). YOU pull the live
 data and feed it in. Do this as three ordered, non-skippable steps:
 
-1. **Query Jira live** via the Atlassian connector for the sprint(s) in scope, e.g.
-   `searchJiraIssuesUsingJql` on `project = AT AND sprint IN (...)` (and `getJiraIssue`
-   for detail). Take real committed / completed story points and the outcome-linked
-   subset per sprint. Never invent, estimate, or reuse numbers from a previous run.
+1. **Query Jira live** via the Atlassian connector for the sprint(s) in scope — using the **resolved sprint
+   ID from Step 0**, not the user's shorthand. E.g. `searchJiraIssuesUsingJql` on
+   `project = AT AND sprint = <resolvedSprintId>` (and `getJiraIssue` for detail). Take real committed /
+   completed story points and the outcome-linked subset per sprint. Never invent, estimate, or reuse numbers
+   from a previous run.
 2. **Write** the returned points to `sprints.json`:
    ```json
    [{"sprint":"S11","committed":25,"completed":20,"goal_points":18}, ...]

@@ -23,6 +23,13 @@ Produce a one-page executive status brief a sponsor can read in 90 seconds.
 
 If no sprint is given, default to the latest sprint and state which sprint you used.
 
+## Resolve the sprint first (before any Jira pull)
+The user's shorthand (`S12`, `Sprint 12`, `12`) is NOT a Jira sprint name/ID. Before pulling data, resolve
+it to the real Jira sprint for project **AT**: map the shorthand to the sprint **number**, look up the
+matching Jira sprint (name + numeric ID), and query with `sprint = <resolvedSprintId>` — never
+`sprint = "S12"` (that errors). If it's ambiguous or not found, ASK the PM which sprint they mean, and state
+the resolved sprint ("Brief for **AT Sprint 12**") before pulling stats.
+
 ## Inputs to read
 - **Jira** (project AT): current sprint status, blockers, done vs committed.
 - **Confluence** (space Atlas): Charter (for the outcome goal), RAID Log (live risks), latest Steering minutes (prior decisions).
