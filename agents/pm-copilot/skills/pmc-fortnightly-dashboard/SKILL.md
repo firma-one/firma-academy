@@ -37,6 +37,19 @@ Jira/Confluence data — no placeholders left in the output.
 ## When to use
 "Fortnightly dashboard", "sprint review", "outcome view", "are we on track for the goal", "velocity", "burn projection", "the fortnightly report".
 
+## How to invoke (examples)
+**Slash command (power users):**
+- `/pmc-fortnightly-dashboard` — build for the **current/latest** sprint (infer the active sprint from Jira).
+- `/pmc-fortnightly-dashboard Sprint 12` — build for a **specific** sprint (`Sprint {n}`; also accepts `S12`).
+
+**Natural-language prompts (say any of these):**
+- *"Prepare the fortnightly dashboard for S12."*
+- *"Are we on track for the goal?"*
+- *"Show me velocity and the outcome view for sprint 12."*
+- *"How did this sprint go against the +20% conversion target?"*
+
+If no sprint is given, default to the latest sprint and state which sprint you used.
+
 ## Prerequisite
 **Code execution & File creation** must be enabled (Settings -> Capabilities) for the metrics chart. Without it, fall back to a prose outcome view (no chart).
 

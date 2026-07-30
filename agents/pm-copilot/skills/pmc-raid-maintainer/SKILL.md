@@ -17,6 +17,17 @@ within a sprint. This skill closes that gap by making RAID a maintained artefact
 "Update RAID", "process the latest minutes", "refresh RAID from the meeting", "the steering minutes are up",
 or automatically as the first step before governance-intelligence if the RAID page is older than the latest minutes.
 
+## How to invoke (examples)
+**Slash command (power users):** `/pmc-raid-maintainer`
+
+**Natural-language prompts (say any of these):**
+- *"Process the latest steering minutes into the RAID log."*
+- *"Refresh RAID from Tuesday's sprint review."*
+- *"Update the RAID log — the minutes are up."*
+- *"What's new in RAID since the last meeting?"*
+
+Always PROPOSES a diff for your approval first — nothing is written to the RAID page until you say yes.
+
 ## Inputs to read
 - **Confluence** (space Atlas): the NEW Steering/sprint-review **Minutes** page(s) and any embedded
   **transcript** snippets since RAID was last updated; and the current **RAID Log** page (to diff against).

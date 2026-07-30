@@ -10,6 +10,19 @@ Produce a one-page executive status brief a sponsor can read in 90 seconds.
 ## When to use
 "Prepare the steering brief", "how are we doing", "status for the sponsor", "exec summary".
 
+## How to invoke (examples)
+**Slash command (power users):**
+- `/pmc-executive-brief` — brief for the **current/latest** sprint (infer from Jira / the latest Fortnightly Dashboard).
+- `/pmc-executive-brief Sprint 12` — brief for a **specific** sprint (`Sprint {n}`; also accepts `S12`).
+
+**Natural-language prompts (say any of these):**
+- *"Draft the sponsor update for S12."*
+- *"Prepare the steering brief for the committee."*
+- *"How do I tell leadership where we are?"*
+- *"Give me an exec summary of this sprint."*
+
+If no sprint is given, default to the latest sprint and state which sprint you used.
+
 ## Inputs to read
 - **Jira** (project AT): current sprint status, blockers, done vs committed.
 - **Confluence** (space Atlas): Charter (for the outcome goal), RAID Log (live risks), latest Steering minutes (prior decisions).
