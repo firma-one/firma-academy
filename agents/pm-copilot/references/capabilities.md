@@ -11,9 +11,25 @@ it defaults to human review. Confluence/Drive (internal) → direct write. Gmail
 
 ## publish-to-Confluence (team system of record)
 Publish team artefacts (Fortnightly Dashboard, Governance Intelligence) as Confluence pages
-in space **Atlas**.
-- Tool: `createConfluencePage` (new) / `updateConfluencePage` (revise).
-- Layout: a **new dated page per sprint**, e.g. "Fortnightly Dashboard — S12", "Governance Intelligence — S12".
+in space **Atlas** (key `AT`, spaceId `458756`). Everything lives under the **Project Atlas — Governance**
+tree (pageId **524289**) — NEVER at the space root.
+- Tool: `createConfluencePage` (new) / `updateConfluencePage` (revise or re-parent). ALWAYS set `parentId`
+  when creating — a page created without a parent lands orphaned at the space root (the bug this rule fixes).
+- **Where each report goes (parent pages under Project Atlas — Governance, pageId 524289):**
+  - **Sprint reports** (Fortnightly Dashboard, Governance Intelligence) → under **"9. Sprint Reports"**,
+    pageId **1802252**. One dated child page per sprint, e.g. "Fortnightly Dashboard — S12",
+    "Governance Intelligence — S12" (`parentId: 1802252`).
+  - Related lifecycle pages already in the tree, for reference/linking: 1. Project Charter (65928),
+    2. Architecture Decision Records (524310), 3. RAID Log (557057), 4. Meeting Notes (589826 — sprint/steering
+    minutes nest here), 5. Agile Operating Principles (1441793), 6. Team Leave Calendar (1474561),
+    7. Functional Requirements/PRD (1507329), 8. Glossary (1540097).
+  - **Meeting Notes convention (under 4. Meeting Notes, 589826):** children are titled `YYYY-MM-DD · <Meeting Name>`
+    (date-prefixed → chronological sort; NOT numbered 4.x). Sprint reviews/retrospectives are NOT meeting-note
+    pages — their substance is the Sprint Report (Fortnightly Dashboard under 9. Sprint Reports, 1802252). Any
+    new meeting-note page follows the dated title and nests under 589826.
+- Layout: a **new dated page per sprint** under the correct parent. Before creating, you MAY check for an
+  existing same-sprint page (CQL `title ~ "Fortnightly Dashboard — S12"` in space AT) and update it instead
+  of creating a duplicate. Confirm the parent exists; if "9. Sprint Reports" is missing, create it under 524289 first.
 - Direct write is appropriate (internal team workspace). Return the page URL.
 
 ## archive-to-Drive (real Office files only)
@@ -39,6 +55,8 @@ Never confuse the two: templates are blank forms; Communication holds live/sent 
 ## send/draft-email (executive delivery)
 Prepare the sponsor email via Gmail.
 - Tool: `create_draft` only — the connector CANNOT send autonomously, and this agent MUST NOT.
+- **Subject line convention (MANDATORY):** every email subject starts with `Atlas - ` then the topic,
+  e.g. `Atlas - Sprint 12 Executive Brief`, `Atlas - Go-live status & steering asks`.
 - Confirm recipient(s) with the PM; never fabricate addresses. Attach the supporting brief .docx.
 - Tell the PM it is in Drafts for review — never imply it was sent.
 

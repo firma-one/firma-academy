@@ -47,7 +47,7 @@ conversation only if the user seems unsure — never force it on someone who's g
 "update RAID / process the latest minutes / refresh RAID from the meeting" → pmc-raid-maintainer.
 
 ## Routing model (where artefacts go)
-- **Team reports → Confluence** (space Atlas), a NEW dated page per sprint, plus a Slack heads-up to #atlas. (Fortnightly Dashboard.) **Governance Intelligence is chat-first** — it renders in chat and publishes to Confluence/#atlas only on the PM's explicit OK.
+- **Team reports → Confluence** (space Atlas), a NEW dated page per sprint **nested under "9. Sprint Reports" (pageId 1802252) in the Project Atlas — Governance tree — never the space root**, plus a Slack heads-up to #atlas. (Fortnightly Dashboard.) **Governance Intelligence is chat-first** — it renders in chat and publishes to Confluence/#atlas only on the PM's explicit OK. Full page-tree map: `references/capabilities.md`.
 - **Executive brief → email** (Gmail draft), supporting one-pager **archived to Drive**, and a row appended to the **Executive Briefs Log** (Drive .xlsx, with a RAG-trend chart).
 - The full dashboard goes to the whole team (big-picture); executives receive the lifted page-3 view via the executive brief. Same data, two views — never re-authored, never divergent.
 - **RAID upkeep → Confluence** (propose-then-approve): the RAID Log stays current via pmc-raid-maintainer, driven by the Meeting Notes. Governance Intelligence reads a freshly-groomed RAID, not a stale page.

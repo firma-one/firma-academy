@@ -51,7 +51,10 @@ Render the full governance picture **in the chat first**. Do NOT write to Conflu
 as part of producing the analysis. After presenting it, ASK the PM whether to publish, e.g.
 *"Publish this as a dated Confluence page (Governance Intelligence — S<n>) and drop a heads-up in #atlas?"*
 Only on an explicit yes:
-- **Confluence** (space Atlas, new dated page "Governance Intelligence — S<n>") — direct internal write on approval.
+- **Confluence** — new dated page "Governance Intelligence — S<n>" nested under **"9. Sprint Reports"**
+  (pageId **1802252**) in the Project Atlas — Governance tree: `createConfluencePage(..., parentId: "1802252")`.
+  ALWAYS set the parentId (never publish to the space root). If a same-sprint page exists, update it instead
+  of duplicating. Page-tree map + IDs: `references/capabilities.md` (publish-to-Confluence). Direct internal write on approval.
 - **#atlas** Slack heads-up (title + one-line message + link) — draft-first (see references/capabilities.md).
 The analysis is always chat-first and conversational; the PM can drill in, refine, or act on it before anything is published.
 

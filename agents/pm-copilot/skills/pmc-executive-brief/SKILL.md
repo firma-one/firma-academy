@@ -66,7 +66,7 @@ The archive/Log steps run once the brief is ready. Whether to pause first is **c
   language authorizes it; its absence means ask.
 
 The steps:
-- **Email:** ALWAYS place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached — **even on a scheduled run.** Sending to a sponsor is the highest-reach action and stays with the human (and the Gmail connector cannot auto-send regardless). Confirm recipients with the PM where possible; never fabricate addresses.
+- **Email:** ALWAYS place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached — **even on a scheduled run.** Sending to a sponsor is the highest-reach action and stays with the human (and the Gmail connector cannot auto-send regardless). **Subject line MUST start with `Atlas - ` followed by the topic**, e.g. `Atlas - Sprint 12 Executive Brief`, `Atlas - Go-live status & steering asks`. Confirm recipients with the PM where possible; never fabricate addresses.
 - **Archive the brief to Drive:** build the one-pager as a real `.docx` in the workspace (Atlas header/footer), then get it onto Drive **via `copy_file`** to a dated name in the **Communication** folder — NOT base64 `create_file` (which hangs). See "Drive upload mechanics" in capabilities.md.
 - **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk — and set col-H RAG-num so the trend chart extends), then `copy_file` to a NEW dated snapshot `Executive-Briefs-Log-{YYYY-MM-DD--HH-MM}.xlsx` in Communication. Every change is a new dated file (no in-place update).
 

@@ -29,9 +29,17 @@ or automatically as the first step before governance-intelligence if the RAID pa
 Always PROPOSES a diff for your approval first — nothing is written to the RAID page until you say yes.
 
 ## Inputs to read
-- **Confluence** (space Atlas): the NEW Steering/sprint-review **Minutes** page(s) and any embedded
-  **transcript** snippets since RAID was last updated; and the current **RAID Log** page (to diff against).
+- **Confluence** (space Atlas): the NEW **Meeting Notes** page(s) under "4. Meeting Notes" (pageId 589826) and
+  any embedded **transcript** snippets since RAID was last updated; and the current **RAID Log** page (557057)
+  to diff against.
 - **Jira** (project AT): to confirm/cross-reference tickets a minute refers to (e.g. a blocker AT-15).
+
+**Meeting Notes convention:** child pages under "4. Meeting Notes" are titled `YYYY-MM-DD · <Meeting Name>`
+(date-prefixed, so they sort chronologically — NOT numbered 4.x). Sprint reviews/retrospectives are NOT kept
+as meeting-note pages — their substance lives in the Sprint Reports (Fortnightly Dashboard under "9. Sprint
+Reports"). So read the dated Meeting Notes (Steering, PO↔Architect, Architect↔Engineers, Governance/Risk Review)
+for RAID inputs; don't expect a separate "sprint review" meeting page. If this skill ever creates a meeting-note
+page, title it `YYYY-MM-DD · <Meeting Name>` and nest it under 589826.
 
 ## Procedure — propose, then (on approval) write
 1. **Identify what's new:** compare the latest Minutes page(s) against the RAID Log's last-updated marker.

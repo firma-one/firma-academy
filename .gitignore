@@ -11,3 +11,10 @@ __pycache__/
 # Charts/artefacts (keep sample outputs that document a skill)
 *.png
 !agents/**/scripts/sample_output.png
+
+# FUSE mount orphans (created when a file is replaced while still open)
+.fuse_hidden*
+_fuse_orphans/
+
+# Scratch / staged-for-deletion folders
+_to_delete*/
