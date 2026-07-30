@@ -43,8 +43,8 @@ Verify: start a chat and ask, e.g., *"Use the pmc-governance-intelligence skill 
 4. (Optional) Add the Atlas Charter/RAID as Project knowledge for extra grounding — though the agent can also read them live from Confluence.
 
 ## Step 4 — Dry run
-In the Project, prompt: **"Prepare Monday's Steering Committee for Project Atlas."**
-Expect: a labelled governance pack — the Fortnightly Dashboard and Governance Intelligence to Confluence, then the Executive Brief (Gmail draft + Drive archive) — each a draft, each announcing its skill. If the dashboard is used, it computes metrics from LIVE Jira and renders a chart (Code execution must be on).
+In the Project, prompt one skill, e.g. **"Prepare the fortnightly dashboard for Project Atlas."** (or `/pmc-helper` to see the menu).
+Expect: the Fortnightly Dashboard rendered as a labelled draft, announcing its skill; it computes metrics from LIVE Jira and renders a chart (Code execution must be on). Governance Intelligence (`/pmc-governance-intelligence`) shows its analysis in chat first and asks before publishing. Each skill runs on its own — invoke them individually as needed.
 
 Then exercise a publishing capability, e.g. **"Archive the exec brief to Drive"** — expect the brief built as a real `.docx`, placed on the Atlas Shared Drive via `copy_file` to a dated file (see below). Try **"post the steering summary to #atlas"** — expect a Slack **draft** staged for review, not sent, unless you explicitly say "post it now".
 

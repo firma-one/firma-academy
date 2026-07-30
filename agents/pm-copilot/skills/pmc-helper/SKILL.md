@@ -53,7 +53,7 @@ Keeps the RAID log current from the latest meeting minutes, so Governance Intell
 
 ---
 
-*Shortcuts:* reply with a number or name, type a `/command` directly (power users), or say **"prepare the Steering Committee"** and I'll assemble the full pack (Dashboard + Governance, then the Executive Brief).
+*Shortcuts:* reply with a number or name, or type a `/command` directly (power users).
 
 ## Boundaries
 Announce at the top: `▸ Skill: PM Helper`. This skill never reads systems of record, never drafts,
