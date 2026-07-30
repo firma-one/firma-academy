@@ -56,10 +56,19 @@ Every bullet must pass the "so what?" test. If a line only states a fact without
 - One story was re-pointed after its sprint started (KYC 8→13 after an async pivot) — distorts burndown/velocity baseline.
 
 ## Publish & archive (internal capabilities — see references/capabilities.md)
-After the PM approves the brief text:
-- **Email:** place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached. Confirm recipients with the PM; never fabricate addresses.
+The archive/Log steps run once the brief is ready. Whether to pause first is **context-aware**:
+- **Interactive chat (a human is present):** show the brief, then ASK before archiving to Drive / logging —
+  "Archive this to Drive and log it in the Executive Briefs Log?" — and proceed on the OK.
+- **Scheduled / unattended run, OR the invoking prompt explicitly authorizes it** (e.g. a Project scheduled
+  task worded "prepare and archive the S12 executive brief"): **archive + log directly, no pause** — the
+  schedule's wording is the pre-authorization. Then report what was archived (Drive link + new Log snapshot name).
+- If you can't tell whether a run is unattended, rely on the prompt wording: explicit "archive/log/publish"
+  language authorizes it; its absence means ask.
+
+The steps:
+- **Email:** ALWAYS place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached — **even on a scheduled run.** Sending to a sponsor is the highest-reach action and stays with the human (and the Gmail connector cannot auto-send regardless). Confirm recipients with the PM where possible; never fabricate addresses.
 - **Archive the brief to Drive:** build the one-pager as a real `.docx` in the workspace (Atlas header/footer), then get it onto Drive **via `copy_file`** to a dated name in the **Communication** folder — NOT base64 `create_file` (which hangs). See "Drive upload mechanics" in capabilities.md.
 - **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk — and set col-H RAG-num so the trend chart extends), then `copy_file` to a NEW dated snapshot `Executive-Briefs-Log-{YYYY-MM-DD--HH-MM}.xlsx` in Communication. Every change is a new dated file (no in-place update).
 
 ## Boundaries
-Draft only. Do not send email or post autonomously. Drive/Confluence writes are internal (direct on request); Gmail/Slack are draft-first. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.
+The **sponsor email is always a Gmail DRAFT — never auto-sent**, in any mode (interactive or scheduled); the connector cannot send autonomously and this skill must not imply it did. Drive archive + Log are direct internal writes: in interactive chat, ask first; on a scheduled/authorized run, proceed and report. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.

@@ -112,7 +112,19 @@ Publish the Fortnightly Dashboard to **Confluence** (space Atlas, new dated page
 "Fortnightly Dashboard — S<n>") for the whole team, and **notify #atlas** on Slack with a
 one-line message + the page link. The team gets the FULL dashboard (Option B — big-picture
 for everyone); the executive view is produced separately by `pmc-executive-brief`, which lifts
-page 3. Team artefact → direct Confluence write; Slack defaults to a draft.
+page 3.
+
+### When to publish — context-aware (interactive = ask; scheduled = auto)
+- **Interactive chat (a human is present):** render the dashboard, then ASK before publishing —
+  "Publish to Confluence (Fortnightly Dashboard — S<n>) and drop a #atlas heads-up?" — and publish only on the OK.
+- **Scheduled / unattended run, OR the invoking prompt explicitly authorizes it** (e.g. a Project scheduled
+  task worded "post the fortnightly dashboard to Confluence" / "publish without waiting for confirmation"):
+  **publish directly, no pause** — the schedule's wording is the pre-authorization. Then report exactly what
+  was published (page link + whether the #atlas heads-up was posted).
+- Confluence is a direct internal write. Slack still defaults to a **draft** unless the prompt says to post it;
+  a scheduled run that says "notify #atlas" may post the one-line heads-up directly.
+- If you can't tell whether a run is unattended, rely on the prompt wording: explicit "publish/post" language
+  authorizes direct publishing; its absence means ask.
 
 ## Boundaries
 Draft only. Announce the skill at the top: `▸ Skill: Fortnightly Dashboard (v2.0.0)`.
