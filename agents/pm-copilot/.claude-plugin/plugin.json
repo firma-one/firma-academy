@@ -1,7 +1,7 @@
 {
   "name": "pm-copilot",
   "displayName": "PM Copilot",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Digital teammate for a Software PM: reads Jira + Confluence and produces executive governance artefacts through five role-shaped skills — pmc-helper (menu/routing), pmc-fortnightly-dashboard (sprint review + outcome), pmc-executive-brief (sponsor brief + email), pmc-governance-intelligence (risk/decisions/actions), pmc-raid-maintainer (RAID upkeep). Publishing mechanics (Confluence/Drive/Slack/Gmail) are internal capabilities under a governed, human-in-the-loop boundary.",
   "author": {
     "name": "Deepak Shettigar"

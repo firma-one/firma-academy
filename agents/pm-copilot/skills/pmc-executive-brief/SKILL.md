@@ -60,14 +60,10 @@ Every bullet must pass the "so what?" test. If a line only states a fact without
 - One story was re-pointed after its sprint started (KYC 8→13 after an async pivot) — distorts burndown/velocity baseline.
 
 ## Publish & archive (internal capabilities — see references/capabilities.md)
-The archive/Log steps run once the brief is ready. Whether to pause first is **context-aware**:
-- **Interactive chat (a human is present):** show the brief, then ASK before archiving to Drive / logging —
-  "Archive this to Drive and log it in the Executive Briefs Log?" — and proceed on the OK.
-- **Scheduled / unattended run, OR the invoking prompt explicitly authorizes it** (e.g. a Project scheduled
-  task worded "prepare and archive the S12 executive brief"): **archive + log directly, no pause** — the
-  schedule's wording is the pre-authorization. Then report what was archived (Drive link + new Log snapshot name).
-- If you can't tell whether a run is unattended, rely on the prompt wording: explicit "archive/log/publish"
-  language authorizes it; its absence means ask.
+The archive/Log/notify steps run automatically once the brief is ready — **no confirmation, in any mode**
+(interactive or scheduled). Do not pause to ask whether to archive, log, or notify; run every step below
+end-to-end and only stop once all of them are done. Then report what was done (Drive link, new Log snapshot
+name, and confirmation the Slack DM was sent).
 
 The steps:
 - **Email — HTML draft, brief auto-attached:** place the sponsor email as a Gmail **draft**
@@ -86,9 +82,9 @@ The steps:
   `fortnightly-dashboard-template.docx`, id `1y9hl9AKorePd8JO2MEmbMFxJ_xy0mdwR`, in Templates — it carries the
   `Atlas - [project_name]` header/footer + placeholders — read it, edit the placeholders with the docx skill),
   then upload to the **Communication** folder (`10Ow77XB3SVlHGoGnGqr8QLLzSOMKEUDc`) via `create_file` (base64
-  from a `.b64` file on disk, delegated + verified). Dated name (LOCKED — ISO-8601 local time, offset in round
-  brackets): `Atlas-Exec-Brief-S{n}-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.docx`, e.g.
-  `Atlas-Exec-Brief-S12-2026-07-31T13-08-43(+0530).docx`. `copy_file` is the byte-perfect re-date mechanism
+  from a `.b64` file on disk, delegated + verified). Dated name (LOCKED — no sprint number; ISO-8601 local
+  time, offset in round brackets): `Atlas-Exec-Brief-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.docx`, e.g.
+  `Atlas-Exec-Brief-2026-07-31T13-08-43(+0530).docx`. `copy_file` is the byte-perfect re-date mechanism
   only for an unchanged file. See "Drive upload mechanics" in capabilities.md.
 - **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the
   xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk —
@@ -98,10 +94,10 @@ The steps:
   (no in-place update).
 - **Notify the PM on Slack (1:1 DM):** once the draft is prepared, send a short **direct message to the PM**
   (their own Slack `user_id` as the channel) confirming the brief is drafted **and attached**, with the RAG
-  headline and the committee asks. Default to `slack_send_message_draft`; use `slack_send_message` only when
-  the PM says to notify/send directly. The note MUST NOT tell the PM to attach the file — it is already
-  attached. E.g. *"📋 Atlas — Sprint 12 Executive Brief drafted in your Gmail (brief attached). RAG: AMBER.
-  Asks: confirm gateway date, book security slot."*
+  headline and the committee asks. Send it directly with `slack_send_message` — no confirmation, no draft —
+  so the PM actually gets notified the moment the brief is ready. The note MUST NOT tell the PM to attach the
+  file — it is already attached. E.g. *"📋 Atlas — Sprint 12 Executive Brief drafted in your Gmail (brief
+  attached). RAG: AMBER. Asks: confirm gateway date, book security slot."*
 
 ## Boundaries
-The **sponsor email is always a Gmail DRAFT — never auto-sent**, in any mode (interactive or scheduled); the connector cannot send autonomously and this skill must not imply it did. Drive archive + Log are direct internal writes: in interactive chat, ask first; on a scheduled/authorized run, proceed and report. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.
+The **sponsor email is always a Gmail DRAFT — never auto-sent**, in any mode (interactive or scheduled); the connector cannot send autonomously and this skill must not imply it did. Drive archive, the Log, and the Slack notification are direct internal writes/actions and run automatically in every mode (interactive or scheduled) — never ask for confirmation before doing them. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.
