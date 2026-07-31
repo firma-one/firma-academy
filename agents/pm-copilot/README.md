@@ -52,4 +52,4 @@ Persistent role + scoped tools (connectors) + a reusable, versioned skill librar
 - **Claude Code:** this same `skills/` tree drops into `.claude/skills/` and is loaded natively from disk — no rework — if you ever want the developer-flavoured, fully filesystem-managed version.
 
 ## Cleanup after the demo
-The synthetic Atlas data lives in Jira (project `AT`, label `atlas`) and Confluence (space `Atlas`, under "Project Atlas — Governance"). Remove both when the interview is done.
+The synthetic Atlas data lives in Jira (project `AT`, label `atlas`) and Confluence (space `Atlas`, under "Project Atlas"). Remove both when the interview is done.

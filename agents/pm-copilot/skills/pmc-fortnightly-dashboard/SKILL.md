@@ -115,7 +115,7 @@ for everyone); the executive view is produced separately by `pmc-executive-brief
 page 3.
 
 ### Where it goes in Confluence (NEVER the space root)
-Publish under the **"9. Sprint Reports"** page (pageId **1802252**) in the Project Atlas — Governance tree —
+Publish under **Project Atlas › 9. Reports › "Sprint Reports"** (pageId **1802252**) —
 `createConfluencePage(..., parentId: "1802252")`. ALWAYS set the parentId; a page created without one lands
 orphaned at the space root. Title: "Fortnightly Dashboard — S<n>". If a page for the same sprint already
 exists, update it instead of creating a duplicate. See `references/capabilities.md` (publish-to-Confluence)
@@ -123,7 +123,7 @@ for the full page-tree map and IDs.
 
 ### When to publish — context-aware (interactive = ask; scheduled = auto)
 - **Interactive chat (a human is present):** render the dashboard, then ASK before publishing —
-  "Publish to Confluence under 9. Sprint Reports (Fortnightly Dashboard — S<n>) and drop a #atlas heads-up?" — publish only on the OK.
+  "Publish to Confluence under 9. Reports › Sprint Reports (Fortnightly Dashboard — S<n>) and drop a #atlas heads-up?" — publish only on the OK.
 - **Scheduled / unattended run, OR the invoking prompt explicitly authorizes it** (e.g. a Project scheduled
   task worded "post the fortnightly dashboard to Confluence" / "publish without waiting for confirmation"):
   **publish directly, no pause** — the schedule's wording is the pre-authorization. Then report exactly what

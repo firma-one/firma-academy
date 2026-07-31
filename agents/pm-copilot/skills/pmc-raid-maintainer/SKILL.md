@@ -1,7 +1,7 @@
 ---
 name: pmc-raid-maintainer
-description: "Use when the Project Manager asks to update the RAID log, 'process the latest minutes', 'refresh RAID from the meeting', or after new Steering/sprint Minutes are posted to Confluence. Reads new meeting minutes/transcripts, extracts new or changed Risks, Assumptions, Issues, Dependencies, decisions taken, and actions, then PROPOSES a RAID diff for the PM to approve before updating the RAID page in Confluence. Maintains a Version History table (Date / Source minute / Summary) at the top of the RAID page, appending one row per approved update. This is the heaviest governance action in the plugin — it edits a system-of-record page — so it is strictly propose-then-approve. Reads Jira and Confluence; never edits RAID without explicit approval."
-version: 1.1.0
+description: "Use when the Project Manager asks to update the RAID log, 'process the latest minutes', 'refresh RAID from the meeting', or after new Steering/sprint Minutes are posted to Confluence. Reads new meeting minutes/transcripts, extracts new or changed Risks, Assumptions, Issues, Dependencies, decisions taken, and actions, then PROPOSES a RAID diff for the PM to approve before updating the RAID page in Confluence. This is the heaviest governance action in the plugin — it edits a system-of-record page — so it is strictly propose-then-approve. Reads Jira and Confluence; never edits RAID without explicit approval."
+version: 1.0.0
 ---
 
 # RAID Maintainer
@@ -36,8 +36,8 @@ Always PROPOSES a diff for your approval first — nothing is written to the RAI
 
 **Meeting Notes convention:** child pages under "4. Meeting Notes" are titled `YYYY-MM-DD · <Meeting Name>`
 (date-prefixed, so they sort chronologically — NOT numbered 4.x). Sprint reviews/retrospectives are NOT kept
-as meeting-note pages — their substance lives in the Sprint Reports (Fortnightly Dashboard under "9. Sprint
-Reports"). So read the dated Meeting Notes (Steering, PO↔Architect, Architect↔Engineers, Governance/Risk Review)
+as meeting-note pages — their substance lives in the Sprint Reports (Fortnightly Dashboard under
+"9. Reports › Sprint Reports"). So read the dated Meeting Notes (Steering, PO↔Architect, Architect↔Engineers, Governance/Risk Review)
 for RAID inputs; don't expect a separate "sprint review" meeting page. If this skill ever creates a meeting-note
 page, title it `YYYY-MM-DD · <Meeting Name>` and nest it under 589826.
 
@@ -52,26 +52,12 @@ page, title it `YYYY-MM-DD · <Meeting Name>` and nest it under 589826.
    the source minute (page + date) and the affected RAID ID / Jira key. Flag anything ambiguous rather than guessing.
 4. **Get explicit approval.** Do NOT modify the RAID page until the PM approves the diff. The PM may edit the diff first.
 5. **On approval, update the RAID Log page** in Confluence (`updateConfluencePage`, space Atlas) with the approved
-   changes, and append one new row to the **Version History table** (see below).
-
-## Version History table (LOCKED format, top of page)
-The RAID Log page carries a **Version History** table as its first section, above the RAID register itself.
-Columns: **Date · Source minute · Summary of changes.**
-- **Date** — the date of this update (the run date, not the minute's date).
-- **Source minute** — the Meeting Notes page this update was derived from (title + link), e.g.
-  `2026-07-29 · Steering`.
-- **Summary of changes** — one line, plain language: what was added/updated/closed, e.g.
-  *"Added R-04 (KMS provisioning dependency); closed A-07 (vendor call, done); updated D-2 to resolved."*
-  Summarize the diff, don't paste it verbatim — this is a scannable log, not a duplicate of the diff.
-Rows are **appended at the bottom** (oldest first, newest last) — do not reorder or delete prior rows. If the
-table doesn't exist yet on the RAID page (first-ever run of this skill against it), create it as the new
-first section, with a header row, before making any other edit.
+   changes and a new last-updated marker + a short changelog line referencing the source minute.
 
 ## Output shape
-Announce the skill at the top: `▸ Skill: RAID Maintainer (v1.1.0)`. Present the proposed diff grouped
+Announce the skill at the top: `▸ Skill: RAID Maintainer (v1.0.0)`. Present the proposed diff grouped
 Add / Update / Close, each traceable to a minute and a RAID/Jira ID, then ask for approval. After approval,
-confirm the RAID page was updated (with a link) and state the Version History summary line that was added —
-do not print internal IDs.
+confirm the RAID page was updated (with a link) — do not print internal IDs.
 
 ## Boundaries
 Editing the RAID system-of-record is a governed write: **propose-then-approve is mandatory** — never
