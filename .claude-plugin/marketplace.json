@@ -10,7 +10,7 @@
       "name": "pm-copilot",
       "source": "./agents/pm-copilot",
       "description": "Digital teammate for a Software PM: reads Jira + Confluence and produces executive governance artefacts through five role-shaped skills (helper, fortnightly-dashboard, executive-brief, governance-intelligence, raid-maintainer). Publishing (Confluence/Drive/Slack/Gmail) is internal, under a governed human-in-the-loop boundary.",
-      "version": "2.3.2",
+      "version": "2.4.0",
       "author": { "name": "Deepak Shettigar" },
       "keywords": ["project-management", "governance", "jira", "confluence", "reporting", "slack", "gmail", "google-drive"]
     }

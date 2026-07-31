@@ -42,6 +42,10 @@ the resolved sprint ("Brief for **AT Sprint 12**") before pulling stats.
 5. End with **what's needed from the committee** (decisions / escalations).
 
 ## Output shape
+The email body (HTML — see Publish & archive) opens with, as the FIRST line above the greeting:
+- **Report date: DD Month YYYY** — the date of the run, in the PM's local timezone (Asia/Calcutta).
+
+Then:
 - One line: *Project · Sprint X of Y · RAG · one-sentence why.*
 - **This week's headline** — 2–3 bullets, each a synthesis (an implication), not a status.
 - **Delivery snapshot** — 2–3 lines.
@@ -66,9 +70,38 @@ The archive/Log steps run once the brief is ready. Whether to pause first is **c
   language authorizes it; its absence means ask.
 
 The steps:
-- **Email:** ALWAYS place the sponsor email as a Gmail **draft** (`create_draft` only — never send), with the one-page brief attached — **even on a scheduled run.** Sending to a sponsor is the highest-reach action and stays with the human (and the Gmail connector cannot auto-send regardless). **Subject line MUST start with `Atlas - ` followed by the topic**, e.g. `Atlas - Sprint 12 Executive Brief`, `Atlas - Go-live status & steering asks`. Confirm recipients with the PM where possible; never fabricate addresses.
-- **Archive the brief to Drive:** build the one-pager as a real `.docx` in the workspace (Atlas header/footer), then get it onto Drive **via `copy_file`** to a dated name in the **Communication** folder — NOT base64 `create_file` (which hangs). See "Drive upload mechanics" in capabilities.md.
-- **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk — and set col-H RAG-num so the trend chart extends), then `copy_file` to a NEW dated snapshot `Executive-Briefs-Log-{YYYY-MM-DD--HH-MM}.xlsx` in Communication. Every change is a new dated file (no in-place update).
+- **Email — HTML draft, brief auto-attached:** place the sponsor email as a Gmail **draft**
+  (`create_draft` / `update_draft`, never send — the connector can't auto-send regardless), **even on a
+  scheduled run.** Send it as an **executive HTML email** (navy `#1F3864` header band with project name +
+  "Sprint X of Y (closed)"; the *Report date: DD Month YYYY* line; a RAG callout coloured by status;
+  uppercase section dividers; clean bullet rows; `Restricted — Internal Use Only · © Atlas` footer), and
+  ALWAYS set the plain-text `body` as a fallback. **Subject leads with the project name and drops the sprint
+  number**, e.g. `Atlas - Executive Brief: Go-live status & steering asks`.
+  **The assistant attaches the one-page brief `.docx` itself** via the tool's `attachments` param, so the
+  draft is delivered ready-to-send — NEVER write a note telling the PM to attach it before sending. Recipient
+  defaults to the PM's own address unless the PM names one; never fabricate addresses. (Attachment bytes go
+  via base64 from a `.b64` file on disk, delegated to a subagent + verified — see "Drive upload mechanics" in
+  capabilities.md; never hand-transcribe base64.)
+- **Archive the brief to Drive:** produce the one-page brief `.docx` in the workspace (start from
+  `fortnightly-dashboard-template.docx`, id `1y9hl9AKorePd8JO2MEmbMFxJ_xy0mdwR`, in Templates — it carries the
+  `Atlas - [project_name]` header/footer + placeholders — read it, edit the placeholders with the docx skill),
+  then upload to the **Communication** folder (`10Ow77XB3SVlHGoGnGqr8QLLzSOMKEUDc`) via `create_file` (base64
+  from a `.b64` file on disk, delegated + verified). Dated name (LOCKED — ISO-8601 local time, offset in round
+  brackets): `Atlas-Exec-Brief-S{n}-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.docx`, e.g.
+  `Atlas-Exec-Brief-S12-2026-07-31T13-08-43(+0530).docx`. `copy_file` is the byte-perfect re-date mechanism
+  only for an unchanged file. See "Drive upload mechanics" in capabilities.md.
+- **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the
+  xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk —
+  and set col-H RAG-num so the trend chart extends), then upload a NEW dated snapshot
+  `Executive-Briefs-Log-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.xlsx` (PM's local tz, round-bracket offset) to
+  Communication via `create_file` (base64 from disk, delegated + verified). Every change is a new dated file
+  (no in-place update).
+- **Notify the PM on Slack (1:1 DM):** once the draft is prepared, send a short **direct message to the PM**
+  (their own Slack `user_id` as the channel) confirming the brief is drafted **and attached**, with the RAG
+  headline and the committee asks. Default to `slack_send_message_draft`; use `slack_send_message` only when
+  the PM says to notify/send directly. The note MUST NOT tell the PM to attach the file — it is already
+  attached. E.g. *"📋 Atlas — Sprint 12 Executive Brief drafted in your Gmail (brief attached). RAG: AMBER.
+  Asks: confirm gateway date, book security slot."*
 
 ## Boundaries
 The **sponsor email is always a Gmail DRAFT — never auto-sent**, in any mode (interactive or scheduled); the connector cannot send autonomously and this skill must not imply it did. Drive archive + Log are direct internal writes: in interactive chat, ask first; on a scheduled/authorized run, proceed and report. Announce the skill at the top of the output: `▸ Skill: Executive Brief Writer`.
