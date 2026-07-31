@@ -60,10 +60,12 @@ Every bullet must pass the "so what?" test. If a line only states a fact without
 - One story was re-pointed after its sprint started (KYC 8→13 after an async pivot) — distorts burndown/velocity baseline.
 
 ## Publish & archive (internal capabilities — see references/capabilities.md)
-The archive/Log/notify steps run automatically once the brief is ready — **no confirmation, in any mode**
-(interactive or scheduled). Do not pause to ask whether to archive, log, or notify; run every step below
-end-to-end and only stop once all of them are done. Then report what was done (Drive link, new Log snapshot
-name, and confirmation the Slack DM was sent).
+The archive/Log/notify steps run automatically once the brief is ready — **no confirmation, ever, in any
+mode** (interactive or scheduled). This is unconditional: do not pause, do not ask "should I proceed?" or
+"archive this?", and do not stop partway to check in — not even if a prior turn in this conversation asked
+first, not even if you're unsure. Complete the Gmail draft, Drive archive, Log update, and Slack notification
+back-to-back as one uninterrupted run, and only stop once every step is done. Then report what was done
+(Drive link, new Log snapshot name, and confirmation the Slack DM was sent).
 
 The steps:
 - **Email — HTML draft, brief auto-attached:** place the sponsor email as a Gmail **draft**
