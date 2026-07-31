@@ -32,24 +32,26 @@ tree (pageId **524289**) — NEVER at the space root.
   of creating a duplicate. Confirm the parent exists; if "9. Sprint Reports" is missing, create it under 524289 first.
 - Direct write is appropriate (internal team workspace). Return the page URL.
 
-## archive-to-Drive (real Office files only)
+## archive-to-Drive (real Office files, plus one plain-text exception)
 Write finished artefacts to the **Atlas Shared Drive** (`parentId = 0AGindXMKcjpZUk9PVA`). Two folders:
 - **Templates** `1VAXBdsZKsHynwWkXFJcnNDRH09TM0XT9` — blank fill-in forms only.
 - **Communication** `10Ow77XB3SVlHGoGnGqr8QLLzSOMKEUDc` — outbound exec communication: the running
   Executive Briefs Log, each fortnight's archived one-pager brief, and archived email copies.
 Never confuse the two: templates are blank forms; Communication holds live/sent artefacts.
-- **Format per artefact (LOCKED 30-Jul):** browser-viewable team artefacts → NATIVE Google Doc/Sheet
-  (omit `disableConversionToGoogleType`, so it opens/edits in the browser); the sponsor's **executive
-  brief .docx** and the **Executive Briefs Log .xlsx** → REAL Office files (`disableConversionToGoogleType: true`),
-  because the brief is an email attachment and the Log carries a live chart.
-- **How the file gets onto Drive (read "Drive upload mechanics" below FIRST):** the dated artefact is
-  produced by taking a base file, EDITING it in the workspace with the xlsx/docx skill (add the Log row / fill
-  the brief), and uploading via **`create_file` with base64 content passed straight from a `.b64` file on disk**
-  — NOT hand-transcribed. When the content is unchanged (pure re-date of an existing Drive file), `copy_file`
-  is the byte-perfect, server-side, no-payload shortcut. Every change is a NEW dated file (the connector cannot
-  update in place).
-- Build/edit the file deterministically in code (python-docx / openpyxl) — do NOT hand-assemble args or
-  upload text/html.
+- **Format per artefact (LOCKED 30-Jul, Log moved to CSV 31-Jul):** browser-viewable team artefacts → NATIVE
+  Google Doc/Sheet (omit `disableConversionToGoogleType`, so it opens/edits in the browser); the sponsor's
+  **executive brief .docx** → a REAL Office file (`disableConversionToGoogleType: true`), because it's an
+  email attachment; the **Executive Briefs Log** → a plain **.csv**, uploaded as text content (no
+  `disableConversionToGoogleType` — it isn't binary).
+- **How the file gets onto Drive (read "Drive upload mechanics" below FIRST):** the dated brief `.docx` is
+  produced by taking a base file, EDITING it in the workspace with the docx skill, and uploading via
+  **`create_file` with base64 content passed straight from a `.b64` file on disk** — NOT hand-transcribed.
+  The Log `.csv` is plain text, so it uploads via `create_file`'s text-content path directly — no base64, no
+  `.b64` relay, no subagent delegation needed. When a Drive file's content is unchanged (pure re-date),
+  `copy_file` is the byte-perfect, server-side, no-payload shortcut. Every change is a NEW dated file (the
+  connector cannot update in place).
+- Build/edit the brief deterministically in code (python-docx) — do NOT hand-assemble args or upload
+  text/html for it. The Log is edited as CSV rows (Python's `csv` module or plain string building is fine).
 - Never write to My Drive root. If a Shared-Drive write silently lands in My Drive, the
   `supportsAllDrives` flag is the likely cause — surface it, don't claim success.
 
@@ -87,22 +89,27 @@ The Drive connector here is **create-only**: no update-by-id, no move, no delete
 NO Google Sheets values API available. So a single running file CANNOT be appended in place. Instead
 the Log is kept as a **series of dated snapshot files** in the **Communication** folder
 (`10Ow77XB3SVlHGoGnGqr8QLLzSOMKEUDc`):
+- **Format (LOCKED, moved to CSV 31-Jul):** the Log is a plain **.csv**, not an Excel file. Rationale: pushing
+  the old `.xlsx` through the Drive connector as base64 binary was slow and repeatedly failed/retried (one
+  run stalled ~35 minutes on this single step); a CSV uploads via the connector's plain-text path instead —
+  no giant base64 string, no retry loop. The RAG-trend chart and second sheet were dropped with it (this is a
+  PoC and the sponsor never sees the Log); the RAG-num column stays in the CSV so a trend can be charted on
+  demand later if wanted.
 - **Naming (LOCKED — ISO-8601 local time, offset in round brackets):**
-  `Executive-Briefs-Log-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.xlsx`, e.g.
-  `Executive-Briefs-Log-2026-07-31T13-08-43(+0530).xlsx`. Use the **PM's local timezone (Asia/Calcutta,
+  `Executive-Briefs-Log-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.csv`, e.g.
+  `Executive-Briefs-Log-2026-07-31T13-08-43(+0530).csv`. Use the **PM's local timezone (Asia/Calcutta,
   +0530), NOT UTC**; round brackets around the offset; zero-padded so it sorts chronologically as text.
   **Latest = most recent timestamp.** (Briefs can be on-demand, not only at sprint end — so timestamp, not sprint number.)
-- Each snapshot is SELF-CONTAINED: all rows to date (S10 sample + every logged brief) PLUS the updated
-  RAG-trend chart. Not a delta — a full copy.
+- Each snapshot is SELF-CONTAINED: all rows to date (S10 sample + every logged brief). Not a delta — a full copy.
 - **Append procedure each fortnight:** (1) find the latest snapshot by name (most recent timestamp) and READ it
-  (`read_file_content` / download) into the workspace; (2) EDIT the workbook with the xlsx skill/openpyxl —
-  add the new brief row and set the RAG-num in col H (GREEN=3/AMBER=2/RED=1) so the trend chart extends;
-  (3) upload the NEW dated snapshot to the Communication folder — because the content changed, this is a
-  `create_file` (base64 from a `.b64` file on disk, delegated + verified — see "THE UPLOAD METHOD" below).
-  Note the new name so next fortnight reads it back.
-- Row fields: Date · Sprint · Overall RAG · Executive one-liner · Recipient(s) · Link to archived brief · Top risk.
-- Old snapshots are left in place (no delete tool). This is intentional for the PoC — it also demonstrates
-  the agent archiving real Office files to Drive. Purpose: RAG trend + audit trail of what leadership was told, when.
+  (`read_file_content` / download) into the workspace; (2) EDIT the CSV — add the new brief row, keeping the
+  RAG-num column populated (GREEN=3/AMBER=2/RED=1) so a trend chart can be produced on demand later;
+  (3) upload the NEW dated snapshot to the Communication folder as **text content** via `create_file` — plain
+  text, so no base64, no `.b64` relay, no subagent delegation. Note the new name so next fortnight reads it back.
+- Row fields: Date · Sprint · Overall RAG · Executive one-liner · Recipient(s) · Link to archived brief · Top
+  risk · RAG-num (GREEN=3/AMBER=2/RED=1).
+- Old snapshots are left in place (no delete tool). This is intentional for the PoC — an audit trail of what
+  leadership was told, when.
 
 ## Drive upload mechanics — HARD-WON RULES (read before touching Drive)
 These are learned workarounds. Follow them exactly; they prevent the failures seen in testing.
@@ -129,19 +136,26 @@ Rule: **never paste a file's base64 into reasoning or output.** Instead:
 **The process for every dated artefact (LOCKED):**
 1. **Read** the base file (template, or the previous dated snapshot) into the workspace (`read_file_content` /
    download).
-2. **Edit it in the workspace** with the xlsx/docx skill (openpyxl / python-docx): add the new Log row and set
-   col-H RAG-num so the chart extends, or fill the brief's `[ … ]` placeholders + Atlas header/footer.
-3. **Upload:** if the content changed, `create_file` with base64 from a `.b64` file on disk (per the mechanics
-   above, delegated + verified). If it's a pure re-date of an unchanged Drive file, `copy_file` is the
-   byte-perfect, server-side, no-payload shortcut and is preferred.
+2. **Edit it in the workspace:** the brief `.docx` with python-docx (fill the `[ … ]` placeholders + Atlas
+   header/footer); the Log `.csv` as plain text (add the new row, keeping the RAG-num column populated).
+3. **Upload:** the brief `.docx`, if content changed, goes via `create_file` with base64 from a `.b64` file on
+   disk (per the mechanics above, delegated + verified). The Log `.csv` goes via `create_file` as **text
+   content** directly — no base64, no `.b64` relay, no delegation. If either is a pure re-date of an unchanged
+   Drive file, `copy_file` is the byte-perfect, server-side, no-payload shortcut and is preferred.
 Every change is a NEW dated file — the connector cannot update in place (see CREATE-ONLY below).
 
-Verified live: `copy_file` re-dated `Executive-Briefs-Log.xlsx` → a dated snapshot (real .xlsx, in seconds);
-and `create_file` with base64-from-disk uploaded a real `.docx` (returned instantly). Both work.
+Verified live: `copy_file` re-dated a real `.docx` → a dated snapshot (in seconds); `create_file` with
+base64-from-disk uploaded a real `.docx` (returned instantly); `create_file` with text content uploaded a
+`.csv` Log snapshot without the base64/retry issues the old `.xlsx` path had. All work.
 
 ### Format policy
-- **Executive brief (.docx, sponsor email attachment)** → REAL Word file (`disableConversionToGoogleType: true`).
-- **Executive Briefs Log snapshots (.xlsx)** → REAL Excel file, keeps the chart (`disableConversionToGoogleType: true`).
+- **Executive brief (.docx, sponsor email attachment)** → REAL Word file (`disableConversionToGoogleType: true`),
+  base64 upload, delegated + verified.
+- **Executive Briefs Log snapshots (.csv)** → plain text, uploaded as `create_file` text content — no
+  `disableConversionToGoogleType`, no base64, no delegation (it isn't binary). Moved off `.xlsx` because
+  binary base64 uploads through the Drive connector were slow/unreliable (one run stalled ~35 minutes on
+  this step); CSV avoids that path entirely. The RAG-trend chart was dropped with it (PoC; can be charted on
+  demand from the RAG-num column).
 - **Anything meant to be VIEWED in the browser** → native Google Doc/Sheet (omit the flag).
 `copy_file` preserves the source's mimeType, so a real-Office base yields a real-Office copy.
 

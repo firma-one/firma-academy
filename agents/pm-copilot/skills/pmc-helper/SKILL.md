@@ -50,7 +50,7 @@ blockquotes. Do NOT merge skills into one blockquote and do NOT use a single cod
 > Risk + decisions + actions as ONE causal picture: risk → the decision it forces → the actions it spawns.
 >
 > **Sources:** Jira (AT) + Confluence RAID log + steering minutes.
-> **Output:** the full governance picture **in chat first** — reds-first, with overdue/unowned flags.  **You control:** I ask before publishing — only on your OK does it go to a dated Confluence page + a #atlas heads-up.
+> **Output:** the full governance picture **in chat first** — reds-first, with overdue/unowned flags.  **You control:** I ask before publishing — only on your OK does it go to a dated Confluence page + a Slack DM to you with the link (no channel post).
 >
 > **▶ How to run**
 > `/pmc-governance-intelligence`

@@ -88,12 +88,14 @@ The steps:
   time, offset in round brackets): `Atlas-Exec-Brief-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.docx`, e.g.
   `Atlas-Exec-Brief-2026-07-31T13-08-43(+0530).docx`. `copy_file` is the byte-perfect re-date mechanism
   only for an unchanged file. See "Drive upload mechanics" in capabilities.md.
-- **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace with the
-  xlsx skill (append one row — Date · Sprint · Overall RAG · one-liner · Recipient(s) · brief link · Top risk —
-  and set col-H RAG-num so the trend chart extends), then upload a NEW dated snapshot
-  `Executive-Briefs-Log-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.xlsx` (PM's local tz, round-bracket offset) to
-  Communication via `create_file` (base64 from disk, delegated + verified). Every change is a new dated file
-  (no in-place update).
+- **Executive Briefs Log:** read the latest dated Log snapshot from Drive, EDIT it in the workspace (append
+  one row — Date · Sprint · Overall RAG · Executive one-liner · Recipient(s) · Link to archived brief · Top
+  risk · RAG-num (GREEN=3/AMBER=2/RED=1) — keep the RAG-num column populated so a trend can be charted on
+  demand later), then upload a NEW dated snapshot
+  `Executive-Briefs-Log-{YYYY-MM-DDThh-mm-ss(±ZZZZ)}.csv` (PM's local tz, round-bracket offset) to
+  Communication via `create_file` as **text content** (the CSV is plain text — no base64, no
+  `disableConversionToGoogleType`, no subagent-delegated relay; those only apply to binary files). Every
+  change is a new dated file (no in-place update — the connector can't).
 - **Notify the PM on Slack (1:1 DM):** once the draft is prepared, send a short **direct message to the PM**
   (their own Slack `user_id` as the channel) confirming the brief is drafted **and attached**, with the RAG
   headline and the committee asks. Send it directly with `slack_send_message` — no confirmation, no draft —
