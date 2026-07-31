@@ -60,7 +60,7 @@ blockquotes. Do NOT merge skills into one blockquote and do NOT use a single cod
 > Keeps the RAID log current from the latest meeting minutes, so Governance Intelligence reads a living source.
 >
 > **Sources:** new Confluence Minutes/transcripts + the current RAID log + Jira (AT) cross-refs.
-> **Output:** a proposed RAID diff (Add / Update / Close) in chat, each line traceable to a minute.  **You control:** nothing changes on the RAID page until you approve the diff.
+> **Output:** a proposed RAID diff (Add / Update / Close) in chat, each line traceable to a minute.  **You control:** nothing changes on the RAID page until you approve the diff — on approval, a Version History row (Date / Source minute / Summary) is logged at the top of the page.
 >
 > **▶ How to run**
 > `/pmc-raid-maintainer`
