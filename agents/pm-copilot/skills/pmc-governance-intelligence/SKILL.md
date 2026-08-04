@@ -1,7 +1,7 @@
 ---
 name: pmc-governance-intelligence
-description: "Use when the Project Manager asks for the governance view, risk radar, decisions, actions, 'what are the risks', 'what did we decide', 'who owns what', or 'what's threatening go-live'. Produces ONE holistic governance picture that connects risks -> the decisions they force -> the actions they spawn, so priority and ownership are gauged together, not as three separate lists. Reads Jira and Confluence; shows the analysis in chat first, then asks before publishing to Confluence / notifying Slack."
-version: 1.0.0
+description: "Use when the Project Manager asks for the governance view, risk radar, decisions, actions, 'what are the risks', 'what did we decide', 'who owns what', or 'what's threatening go-live'. Produces ONE holistic governance picture that connects risks -> the decisions they force -> the actions they spawn, so priority and ownership are gauged together, not as three separate lists. Reads Jira and Confluence; shows the analysis in chat first, then asks before publishing to Confluence / notifying Slack in interactive chat — on a scheduled/unattended run, or when the prompt explicitly authorizes it, publishes directly without pausing."
+version: 1.1.0
 ---
 
 # Governance Intelligence
@@ -24,7 +24,8 @@ priority and drives the committee.
 - *"Who owns what — any overdue or unowned actions?"*
 - *"Give me the governance picture for steering prep."*
 
-Renders the analysis in chat first, then asks before publishing (see below).
+Renders the analysis in chat first; in interactive chat, asks before publishing; on a scheduled/unattended
+run, publishes directly without pausing (see below).
 
 ## Inputs to read
 - **Confluence** (space Atlas): RAID Log (risks/issues/dependencies), latest Steering minutes (decisions taken).
@@ -46,17 +47,27 @@ Renders the analysis in chat first, then asks before publishing (see below).
 A ranked set of **risk → decision → action chains** (reds first), then a short amber "watching" list,
 then an unowned/overdue callout. Cross-reference Jira keys, RAID IDs, decision IDs (R-/D-/A-).
 
-## Show first, then ask to publish (chat-first — do NOT auto-publish)
+## When to publish — context-aware (interactive = ask; scheduled = auto)
 Render the full governance picture **in the chat first**. Do NOT write to Confluence or post to Slack
-as part of producing the analysis. After presenting it, ASK the PM whether to publish, e.g.
-*"Publish this as a dated Confluence page (Governance Intelligence — S<n>) and drop a heads-up in #atlas?"*
-Only on an explicit yes:
+as part of producing the analysis.
+- **Interactive chat (a human is present):** after presenting it, ASK the PM whether to publish, e.g.
+  *"Publish this as a dated Confluence page (Governance Intelligence — S<n>) and drop a heads-up in #atlas?"*
+  — publish only on the OK.
+- **Scheduled / unattended run, OR the invoking prompt explicitly authorizes it** (e.g. a Project scheduled
+  task worded "publish the governance view" / "post without waiting for confirmation"): **publish directly,
+  no pause** — the schedule's wording is the pre-authorization. Then report exactly what was published (page
+  link + whether the #atlas heads-up was posted).
+- If you can't tell whether a run is unattended, rely on the prompt wording: explicit "publish/post" language
+  authorizes direct publishing; its absence means ask.
+
+On publish (interactive approval, or scheduled auto-publish):
 - **Confluence** — new dated page "Governance Intelligence — S<n>" nested under **Project Atlas › 9. Reports › "Health Check"**
   (pageId **2457602**): `createConfluencePage(..., parentId: "2457602")`.
   ALWAYS set the parentId (never publish to the space root). If a same-sprint page exists, update it instead
   of duplicating. Page-tree map + IDs: `references/capabilities.md` (publish-to-Confluence). Direct internal write on approval.
-- **#atlas** Slack heads-up (title + one-line message + link) — draft-first (see references/capabilities.md).
-The analysis is always chat-first and conversational; the PM can drill in, refine, or act on it before anything is published.
+- **#atlas** Slack heads-up (title + one-line message + link) — draft-first in interactive mode; a scheduled
+  run that says "notify #atlas" may post the one-line heads-up directly (see references/capabilities.md).
+The analysis is always chat-first and conversational; the PM can drill in, refine, or act on it before anything is published in interactive mode.
 
 ## Atlas anchors
 - R-01 / AT-15 — payment-gateway API delay (~3 wks to 8-Aug) → D-1 sandbox stub.
@@ -65,6 +76,9 @@ The analysis is always chat-first and conversational; the PM can drill in, refin
 - D-3 — accept AT-16 reconciliation as a Sprint 14 carry-over candidate.
 
 ## Boundaries
-**Chat-first:** always render the analysis in chat and ASK before publishing — never write to Confluence
-or post to Slack as an automatic part of running the skill. On approval, Confluence is a direct internal
-write and Slack defaults to a draft. Announce the skill at the top: `▸ Skill: Governance Intelligence (v1.0.0)`.
+**Chat-first, context-aware publish:** always render the analysis in chat before any write; never write to
+Confluence or post to Slack as an automatic part of *producing* the analysis. In interactive chat, ASK before
+publishing. On a scheduled/unattended run, or when the prompt explicitly authorizes it, publish directly and
+report what was published — see "When to publish" above. Confluence is always a direct internal write once
+publishing happens; Slack defaults to a draft in interactive mode and may post directly on an authorized
+scheduled run. Announce the skill at the top: `▸ Skill: Governance Intelligence (v1.1.0)`.

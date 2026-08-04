@@ -6,7 +6,7 @@
 | **Cadence** | Every weekday, 08:00 IST (Asia/Calcutta) |
 | **Cron (UTC)** | `30 2 * * 1-5` |
 | **Mode** | Unattended / scheduled |
-| **Publishes** | Confluence dated page (under "9. Sprint Reports") + Slack #atlas |
+| **Publishes** | Confluence dated page (under "9. Reports › Health Check") + Slack #atlas |
 | **Edits system-of-record?** | No — read/synthesise only |
 
 ## Prompt sent on each firing
